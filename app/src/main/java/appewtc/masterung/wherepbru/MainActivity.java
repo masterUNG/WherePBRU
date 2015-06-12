@@ -1,9 +1,11 @@
 package appewtc.masterung.wherepbru;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +13,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }   // onCreate
+
+    public void clickEngineer(View view) {
+        myIntent(13.07019806, 99.97874022);
+    }
+
+    private void myIntent(double douLat, double douLng) {
+        Intent objIntent = new Intent(MainActivity.this, MapsActivity.class);
+        objIntent.putExtra("lat", douLat);
+        objIntent.putExtra("lng", douLng);
+        startActivity(objIntent);
     }
 
     @Override
@@ -34,4 +47,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+}   // Main Class
