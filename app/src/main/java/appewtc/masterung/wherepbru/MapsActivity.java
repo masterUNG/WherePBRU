@@ -1,5 +1,6 @@
 package appewtc.masterung.wherepbru;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -9,6 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -16,7 +18,10 @@ public class MapsActivity extends FragmentActivity {
     private double latCenterADouble, lngCenterADouble;
     private LatLng centerLatLng, engineerLatLng, computerLatLng,
                     accountLatLng, humentLatLng, architectLatLng,
-                    cardLatLng, section1LatLng, section2LatLng, userLatLng;
+                    cardLatLng, section1LatLng, section2LatLng, section3LatLng, userLatLng;
+    private PolylineOptions engineerPolylineOptions, computerPolylineOptions, accountPolylineOptions;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class MapsActivity extends FragmentActivity {
         cardLatLng = new LatLng(13.06927838, 99.97543573);
         section1LatLng = new LatLng(13.070362, 99.976589);
         section2LatLng = new LatLng(13.070691, 99.978491);
+        section3LatLng = new LatLng(13.073428, 99.978241);
 
         //user Maker
         double douUserLat = getIntent().getExtras().getDouble("userLat");
@@ -84,7 +90,25 @@ public class MapsActivity extends FragmentActivity {
         //Create Maker
         createMaker();
 
+        //Create Polyline
+        createPolyLine();
+
     }   // setupMap
+
+    private void createPolyLine() {
+
+        //Engineer Polyline
+        engineerPolylineOptions = new PolylineOptions();
+        engineerPolylineOptions.add(userLatLng)
+                .add(cardLatLng)
+                .add(section1LatLng)
+                .add(section2LatLng)
+                .add(engineerLatLng)
+                .width(5)
+                .color(Color.RED);
+        mMap.addPolyline(engineerPolylineOptions);
+
+    }   // createPolyline
 
     private void createMapType() {
 
