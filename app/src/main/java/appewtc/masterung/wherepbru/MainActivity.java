@@ -15,6 +15,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }   // onCreate
 
+    public void clickArchitech(View view) {
+        myIntent(13.06967551, 99.9786973);
+    }
+
+    public void clickHument(View view) {
+        myIntent(13.07220462, 99.98032808);
+    }
+
+    public void clickAccount(View view) {
+        myIntent(13.07315564, 99.97946978);
+    }
+
+    public void clickComputer(View view) {
+        myIntent(13.07263311, 99.97739911);
+    }
+
     public void clickEngineer(View view) {
         myIntent(13.07019806, 99.97874022);
     }

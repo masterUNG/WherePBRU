@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView2"
+                android:onClick="clickComputer"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/build2" />
@@ -37,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView3"
+                android:onClick="clickAccount"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/build3" />
@@ -87,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView4"
+                android:onClick="clickHument"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/build4" />
@@ -95,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView5"
+                android:onClick="clickArchitech"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/build5" />
