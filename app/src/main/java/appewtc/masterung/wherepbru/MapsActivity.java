@@ -1,15 +1,22 @@
 package appewtc.masterung.wherepbru;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapsActivity extends FragmentActivity {
@@ -20,8 +27,8 @@ public class MapsActivity extends FragmentActivity {
                     accountLatLng, humentLatLng, architectLatLng,
                     cardLatLng, section1LatLng, section2LatLng, section3LatLng, userLatLng;
     private PolylineOptions engineerPolylineOptions, computerPolylineOptions, accountPolylineOptions;
-
-
+    private Polyline engineerPolyline, computerPolyline, accountPolyline;
+    private PolygonOptions pbruPolygonOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +100,114 @@ public class MapsActivity extends FragmentActivity {
         //Create Polyline
         createPolyLine();
 
+        //Create OnMapClick
+        createOnMapClick();
+
+        //Create PolyGon
+        createPolygon();
+
+        //Maker onClick
+        makerOnClick();
+
     }   // setupMap
+
+    private void makerOnClick() {
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                double douLat = marker.getPosition().latitude;
+                double douLng = marker.getPosition().longitude;
+
+                Log.d("pbru", "Id of Marker ==> " + String.valueOf(marker.getId()));
+
+                Intent objIntent = new Intent(MapsActivity.this, DetailActivity.class);
+                objIntent.putExtra("Lat", douLat);
+                objIntent.putExtra("Lng", douLng);
+                startActivity(objIntent);
+
+                return true;
+            }
+        });
+
+    }   //makerOnClick
+
+    private void createPolygon() {
+
+        pbruPolygonOptions = new PolygonOptions();
+        pbruPolygonOptions.add(new LatLng(13.069446, 99.977555))
+                .add(new LatLng(13.073323, 99.975816))
+                .add(new LatLng(13.073261, 99.979593))
+                .add(new LatLng(13.069710, 99.980005))
+                .add(new LatLng(13.069446, 99.977555))
+                .strokeWidth(10)
+                .strokeColor(Color.MAGENTA)
+                .fillColor(Color.argb(50, 185, 237, 108));
+        mMap.addPolygon(pbruPolygonOptions);
+
+    }   // createPolygon
+
+    private void createOnMapClick() {
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+                //Remove Polyline
+               removeAllPolyLine();
+
+                showMyDialog();
+            }   // event
+        });
+
+    }   //createOnMapClick
+
+    private void showMyDialog() {
+
+        CharSequence[] objCharSequences = {"Engineer", "Computer", "Account"};
+        AlertDialog.Builder objBuilder = new AlertDialog.Builder(this);
+        objBuilder.setTitle("Please Choose Direction");
+        objBuilder.setSingleChoiceItems(objCharSequences, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+
+                switch (i) {
+                    case 0:
+                       mMap.addPolyline(engineerPolylineOptions);
+
+                        break;
+                    case 1:
+                       mMap.addPolyline(computerPolylineOptions);
+
+                        break;
+                    case 2:
+                       mMap.addPolyline(accountPolylineOptions);
+
+                        break;
+                }
+
+                dialogInterface.dismiss();
+
+            }   //event
+        });
+        objBuilder.show();
+
+    }   // showMyDialog
+
+    private void removeAllPolyLine() {
+
+        engineerPolyline = mMap.addPolyline(engineerPolylineOptions);
+        computerPolyline = mMap.addPolyline(computerPolylineOptions);
+        accountPolyline = mMap.addPolyline(accountPolylineOptions);
+
+        engineerPolyline.remove();
+        computerPolyline.remove();
+        accountPolyline.remove();
+
+    }
 
     private void createPolyLine() {
 
@@ -104,9 +218,33 @@ public class MapsActivity extends FragmentActivity {
                 .add(section1LatLng)
                 .add(section2LatLng)
                 .add(engineerLatLng)
-                .width(5)
+                .width(10)
                 .color(Color.RED);
-        mMap.addPolyline(engineerPolylineOptions);
+       // mMap.addPolyline(engineerPolylineOptions);
+
+        //Computer Polyline
+        computerPolylineOptions = new PolylineOptions();
+        computerPolylineOptions.add(userLatLng)
+                .add(cardLatLng)
+                .add(section1LatLng)
+                .add(section2LatLng)
+                .add(new LatLng(13.072613, 99.978273))
+                .add(computerLatLng)
+                .width(10)
+                .color(Color.GREEN);
+       // mMap.addPolyline(computerPolylineOptions);
+
+        //Account PolyLine
+        accountPolylineOptions = new PolylineOptions();
+        accountPolylineOptions.add(userLatLng)
+                .add(cardLatLng)
+                .add(section1LatLng)
+                .add(section2LatLng)
+                .add(section3LatLng)
+                .add(accountLatLng)
+                .width(10)
+                .color(Color.YELLOW);
+       // mMap.addPolyline(accountPolylineOptions);
 
     }   // createPolyline
 
