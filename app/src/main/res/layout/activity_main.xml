@@ -107,6 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView6"
+                android:onClick="clickAreYouHere"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/friend" />

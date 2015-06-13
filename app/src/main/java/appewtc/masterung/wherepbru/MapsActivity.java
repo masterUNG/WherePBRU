@@ -16,7 +16,7 @@ public class MapsActivity extends FragmentActivity {
     private double latCenterADouble, lngCenterADouble;
     private LatLng centerLatLng, engineerLatLng, computerLatLng,
                     accountLatLng, humentLatLng, architectLatLng,
-                    cardLatLng, section1LatLng, section2LatLng;
+                    cardLatLng, section1LatLng, section2LatLng, userLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,11 @@ public class MapsActivity extends FragmentActivity {
         cardLatLng = new LatLng(13.06927838, 99.97543573);
         section1LatLng = new LatLng(13.070362, 99.976589);
         section2LatLng = new LatLng(13.070691, 99.978491);
+
+        //user Maker
+        double douUserLat = getIntent().getExtras().getDouble("userLat");
+        double douUserLng = getIntent().getExtras().getDouble("userLng");
+        userLatLng = new LatLng(douUserLat, douUserLng);
 
     }   //createLatLng
 
@@ -146,6 +151,13 @@ public class MapsActivity extends FragmentActivity {
         mMap.addMarker(new MarkerOptions()
                         .position(section2LatLng)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+
+        //Maker of User
+        mMap.addMarker(new MarkerOptions()
+                        .position(userLatLng)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend)));
+
+
 
 
     }   // createMaker

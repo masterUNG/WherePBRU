@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager objLocationManager;
     private Criteria objCriteria;
     private boolean gpsABoolean, networkABoolean;
+    private double douUserLat, douUserLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }   // onCreate
+
+    public void clickAreYouHere(View view) {
+
+        String strUserLat = latTextView.getText().toString();
+        String strUserLng = lngTextView.getText().toString();
+
+        douUserLat = Double.parseDouble(strUserLat);
+        douUserLng = Double.parseDouble(strUserLng);
+
+        myIntent(douUserLat, douUserLng);
+
+    }   //clickAreYouHere
 
 
     @Override
@@ -161,23 +174,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickArchitech(View view) {
+        getLocationUser();
         myIntent(13.06967551, 99.9786973);
     }
 
     public void clickHument(View view) {
+        getLocationUser();
         myIntent(13.07220462, 99.98032808);
     }
 
     public void clickAccount(View view) {
+        getLocationUser();
         myIntent(13.07315564, 99.97946978);
     }
 
     public void clickComputer(View view) {
+        getLocationUser();
         myIntent(13.07263311, 99.97739911);
     }
 
     public void clickEngineer(View view) {
+        getLocationUser();
         myIntent(13.07019806, 99.97874022);
+    }
+
+    private void getLocationUser() {
+        String strUserLat = latTextView.getText().toString();
+        String strUserLng = lngTextView.getText().toString();
+
+        douUserLat = Double.parseDouble(strUserLat);
+        douUserLng = Double.parseDouble(strUserLng);
     }
 
     private void myIntent(double douLat, double douLng) {
@@ -185,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
         objIntent.putExtra("lat", douLat);
         objIntent.putExtra("lng", douLng);
         objIntent.putExtra("mapType", mapAnInt);
+        objIntent.putExtra("userLat", douUserLat);
+        objIntent.putExtra("userLng", douUserLng);
         startActivity(objIntent);
     }
 
